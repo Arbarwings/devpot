@@ -162,5 +162,4 @@ $ devpot usage # for list available commands
 $ devpot console # for enter to console
 $ devpot logs <cont_name> -f # for logs stream container
 $ devpot build && devpot down && devpot up && devpot ps # for full rebuild
-$ devpot build && devpot down && devpot up && devpot ps # for full rebuild
 ```
