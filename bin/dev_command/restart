@@ -1,0 +1,4 @@
+
+cd ${DEV_WORKDIR} && docker-compose restart ${DEV_COMMAND_OPTIONS};
+exit $?;
+

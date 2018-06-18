@@ -1,0 +1,109 @@
+version: '2'
+
+services:
+
+    web:
+        build:
+            context: ./conf/nginx
+        restart: always
+        env_file: .env
+        depends_on:
+            - php7xdebug
+            - mysql
+            - pgsql
+            - redis
+            - mailcatcher
+        volumes:
+            - ./conf/nginx/conf:/etc/nginx
+        volumes_from:
+            - php7xdebug
+        links:
+            - php7xdebug:fpm7
+            - mailcatcher
+        ports:
+            - 80:80
+            - 443:443
+
+
+    mysql:
+        image: mariadb:latest
+        env_file: .env
+        ports:
+            - 3307:3306
+        volumes:
+            - ./conf/mysql/conf:/etc/mysql/conf.d
+            - ./data/mysql:/var/lib/mysql
+        restart: always
+
+
+    pgsql:
+        image: postgres:latest
+        env_file: .env
+        ports:
+            - 5433:5432
+        volumes:
+            - ./data/pgsql:/var/lib/postgresql/data
+        restart: always
+
+
+    redis:
+        image: redis:latest
+        restart: always
+        volumes:
+            - ./data/redis:/data
+        ports:
+            - 6379:6379
+
+
+    mailcatcher:
+        image: schickling/mailcatcher
+        restart: always
+
+
+    php7console:
+        env_file: .env
+        build:
+            args:
+                - TZ=${TZ}
+            context: ./conf/php7console
+        container_name: php7console
+        restart: always
+        volumes_from:
+            - php7xdebug
+        tty: true
+
+
+    php7xdebug:
+        env_file: .env
+        build:
+            context: ./conf/php7xdebug
+        restart: always
+        volumes:
+            - ./workspace:/data
+        links:
+            - pgsql
+            - mysql
+            - mailcatcher
+            - redis
+
+
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin:latest
+        restart: always
+        volumes:
+            - /sessions
+        depends_on:
+            - mysql
+        env_file: .env
+        ports:
+            - 8081:80
+
+
+    mongodb:
+        image: mongo:latest
+        restart: always
+        env_file: .env
+        volumes:
+            - ./data/mongodb:/data/db
+        ports:
+            - 27018:27017

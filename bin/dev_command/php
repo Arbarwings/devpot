@@ -1,0 +1,11 @@
+
+DEV_USER=www-data;
+DEV_SERVICE=php7xdebug;
+
+DEV_CMD='php';
+if [ -n "${DEV_DATADIR}" ]; then
+    DEV_CMD="cd ${DEV_DATADIR} && php";
+fi
+
+cd ${DEV_WORKDIR}&&docker-compose run --rm -u www-data php7xdebug bash -c "${DEV_CMD} ${DEV_COMMAND_OPTIONS}"
+exit $?
