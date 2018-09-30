@@ -26,4 +26,3 @@ script:
   - devpot up
   - devpot ps
   - devpot php -v
-  - devpot create-certificate test

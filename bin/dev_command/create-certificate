@@ -1,6 +1,6 @@
 
 # Config
-CERTS_DIR=${DEV_WORKDIR}/../../conf/nginx/conf/certs;
+CERTS_DIR=${DEV_WORKDIR}/conf/nginx/conf/certs;
 CERT_PASSWORD="MyPassword";
 CERT_COUNTRY="NL";
 CERT_PROVICE="Noord-Holland";

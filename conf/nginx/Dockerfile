@@ -1,7 +1,5 @@
 FROM nginx:stable
 
-MAINTAINER Melvin Oostendorp <info@arbarwings.nl>
-
 RUN mkdir -p /tmp/nginx && mkdir -p /tmp/nginx/cache && mkdir -p /tmp/nginx/cache \
 	&& usermod -u 1000 -d /data -s /bin/bash www-data \
 	&& mkdir /data && chmod -R 775 /data && find /data -type d -exec chmod 775 {} \;

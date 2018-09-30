@@ -1,0 +1,63 @@
+OK=false
+if [ "$1" != "-y" ]; then
+    echo -n "Clear all docker env?[y/N] "
+    read proceed
+    if [ "$proceed" = "y" -o "$proceed" = "Y" ]; then
+        OK=true
+    fi
+else
+    shift
+    OK=true
+fi
+if [ "$OK" = "true" ]; then
+    itens="$@"
+    if [ -z "$itens" ]; then
+        itens="i c v" # image, containers, volumes
+    fi
+    for i in 1 2; do
+        echo "~~~~~~~~~~~~~~ Clean round $i ~~~~~~~~~~~~~~"
+        for item in $itens; do
+            echo "====== Cleaning $item... ======"
+            case $item in
+                "i")
+                    echo "Cleanig dangling images"
+                    IMAGES=`docker images -f "dangling=true" --no-trunc`
+                    echo "$IMAGES"
+                    if [ `echo "$IMAGES" | wc -l` -eq 1 ]; then
+                        echo "No dangling images to clear"
+                    else
+                        echo "Cleaning dangling images..."
+                        docker rmi `echo "$IMAGES" | grep -v "IMAGE ID" | awk '{print $3}'`
+                    fi
+                ;;
+                "c")
+                    echo "Cleanig dead and exited containers"
+                    CONTAINERS=`docker ps --filter status=dead --filter status=exited`
+                    echo "$CONTAINERS"
+                    if [ `echo "$CONTAINERS" | wc -l` -eq 1 ]; then
+                        echo "No containers dead or exited to clean"
+                    else
+                        echo "Cleaning dead and exited containers..."
+                        docker rm `echo "$CONTAINERS" | grep -v "CONTAINER ID" | awk '{print $1}'`
+                    fi
+                ;;
+                "v")
+                    echo "Cleanig dangling volumes"
+                    VOLUMES=`docker volume ls -f dangling=true`
+                    echo "$VOLUMES"
+                    if [ `echo "$VOLUMES" | wc -l` -eq 1 ]; then
+                        echo "No dangling volumes to clear"
+                    else
+                        echo "Cleaning dangling volumes..."
+                        docker volume rm `echo "$VOLUMES" | grep -v "VOLUME NAME" | awk '{print $2}'`
+                    fi
+                ;;
+                *)
+                    echo $item
+                ;;
+            esac
+            echo "------ ...clean $item done! ------"
+        done
+    done
+fi
+exit $?;

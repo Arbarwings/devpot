@@ -76,18 +76,15 @@ $ sudo usermod -aG docker $USER
 ## On the ship
 - mailcatcher   -> schickling/mailcatcher:latest (all outgoing mail is sent to http://mail.dev/)
 - nginx         -> nginx:stable
-- mysql         -> mysql:latest
-- pgsql         -> postgres:latest   
+- mysql         -> mysql:latest  
 - php7xdebug    -> php:7.2 + xdebug
 - dnsmasq  ->  dnsmasq:latest
 - php7console   -> devpot console
 - redis         -> redis:latest
 - phpmyadmin    -> phpmyadmin:latest (http://phpmyadmin.dev)
-- mongodb       -> mongodb:latest
 
 ## Console
 - *ZSH* + [oh-my-zsh](http://ohmyz.sh/)
-- For frontend: nodejs, gem, npm, webpack, bower, gulp, uglify-js, uglifycss, create-react-app
 - For backend: composer, php, phpunit, autocomplete
 - For automation deploy: dep ([Deployer](http://deployer.org/))
 
@@ -110,14 +107,6 @@ $ devpot create-certificate test # Replace test with your domain
         database_name: sf
         database_user: root
         database_password: root
-
-      # Example for pgsql
-      parameters:
-        database_host: pgsql
-        database_port: 5433
-        database_name: sf
-        database_user: postgres
-        database_password: postgres
       
       # Example for redis
       parameters:

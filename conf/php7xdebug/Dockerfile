@@ -1,5 +1,5 @@
 FROM php:7.2-fpm
-MAINTAINER Melvin Oostendorp <info@arbarwings.nl>
+
 RUN apt-get update && apt-get install -y --no-install-recommends apt-utils
 
 # Install locale
@@ -50,7 +50,6 @@ RUN docker-php-ext-install xsl
 
 # intl
 RUN apt-get install -y libicu-dev
-#RUN pecl install intl
 RUN docker-php-ext-install intl
 
 # zip
@@ -62,10 +61,10 @@ RUN pecl install xdebug \
     && echo "zend_extension=$(find /usr/local/lib/php/extensions/ -name xdebug.so)\n" >> /usr/local/etc/php/conf.d/xdebug.ini \
     && echo "xdebug.remote_enable=1" >> /usr/local/etc/php/conf.d/xdebug.ini \
     && echo "xdebug.remote_autostart=0" >> /usr/local/etc/php/conf.d/xdebug.ini \
-    && echo "xdebug.remote_connect_back=1" >> /usr/local/etc/php/conf.d/xdebug.ini \
-
+    && echo "xdebug.remote_connect_back=1" >> /usr/local/etc/php/conf.d/xdebug.ini
+    
 # common
-RUN docker-php-ext-install opcache calendar dba pcntl bcmath mbstring xmlrpc ftp shmop mysqli
+RUN docker-php-ext-install opcache calendar dba pcntl bcmath mbstring xmlrpc ftp shmop
 
 
 # preconf enviroment
@@ -82,7 +81,7 @@ RUN apt-get install -y \
         libxml2-dev \
         libicu-dev \
         libxslt-dev \
-        wget git vim ruby ruby-dev libcurl4-openssl-dev
+        wget git vim libcurl4-openssl-dev
 
 # Clean apt
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*

@@ -1,5 +1,5 @@
 FROM php:7.2-fpm
-MAINTAINER Melvin Oostendorp <info@arbarwings.nl>
+
 RUN apt-get update
 
 ENV COMPOSER_HOME=/home/composer/.composer
@@ -54,8 +54,6 @@ RUN docker-php-ext-install xsl
 RUN apt-get update && apt-get install -y zlib1g-dev libicu-dev g++
 RUN docker-php-ext-configure intl
 RUN docker-php-ext-install intl
-#RUN pecl install intl
-#RUN docker-php-ext-install intl
 
 # zip
 RUN apt-get install -y zlib1g-dev \
@@ -82,13 +80,8 @@ RUN apt-get install -y \
         libxml2-dev \
         libicu-dev \
         libxslt-dev \
-        wget git vim ruby ruby-dev libcurl4-openssl-dev \
+        wget git vim libcurl4-openssl-dev \
         mc
-
-#Install nodejs
-RUN apt-get install -y gnupg
-RUN curl -sL https://deb.nodesource.com/setup_9.x | bash -
-RUN apt-get install -y nodejs build-essential
 
 # Install OH-MY-ZSH to see pretty terminal and ditch the bash
 RUN apt-get install -y zsh
@@ -96,17 +89,6 @@ RUN curl -L https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.s
 
 # Clean apt
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-
-# Install Bower & Grunt
-RUN npm install -g bower gulp uglify-js uglifycss webpack && \
-    echo '{ "allow_root": true }' > /root/.bowerrc
-# Install gem dependencies
-RUN apt-get update && apt-get install -qq -y \
-  build-essential libpq-dev libffi-dev --no-install-recommends
-RUN gem install bundler redcarpet rouge sass hologram
-
-# Install Create React App
-RUN npm install -g create-react-app
 
 #COMPOSER
 RUN curl https://getcomposer.org/installer | php -- && mv composer.phar /usr/local/bin/composer && chmod +x /usr/local/bin/composer
@@ -119,11 +101,6 @@ RUN composer global require "phpunit/phpunit" && \
 #Laravel
 RUN composer global require "laravel/installer"
 RUN ln -s /home/composer/.composer/vendor/bin/laravel /usr/local/bin/laravel
-
-#DEPLOYER.ORG
-RUN curl -LO https://deployer.org/deployer.phar && \
-    mv deployer.phar /usr/local/bin/dep && \
-    chmod +x /usr/local/bin/dep
 
 COPY etc/php-fpm.conf /usr/local/etc/
 COPY etc/php.ini /usr/local/etc/php/
