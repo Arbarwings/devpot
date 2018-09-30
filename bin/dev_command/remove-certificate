@@ -1,5 +1,5 @@
 
-certutil -D -d sql:${HOME}/.pki/nssdb -n "${DEV_COMMAND_OPTIONS}.dev"
-echo "Removed certificate: ${DEV_COMMAND_OPTIONS}.dev"
+certutil -D -d sql:${HOME}/.pki/nssdb -n "${DEV_COMMAND_OPTIONS}.localhost"
+echo "Removed certificate: ${DEV_COMMAND_OPTIONS}.localhost"
 
 exit $?;

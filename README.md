@@ -46,17 +46,9 @@ $ sudo groupadd docker
 $ sudo usermod -aG docker $USER
 # Now restart? Or find an other way to complete the usermod changes
 $ docker-compose build && docker-compose up -d && docker-compose ps
-$ sudo apt-get update && sudo apt-get install dnsmasq
 $ mv ./test ./workspace
-# Then open http://php.test.dev/ in your browser
+# Then open http://php.test.localhost/ in your browser
 ```
-
-#### Set local DNS server
-
-- Add a file `/etc/dnsmasq.d/dev.conf` with `address=/.dev/127.0.0.1`  
-- Then open http://php.test.dev/ in your browser
-- [Examples](https://youtu.be/42BemUfK5-4)
-http://blog.abushady.com/2015/01/20/routing-all-dev-domains-to-local-host.html
 
 #### Run Docker as non root
 - Create the docker group.
@@ -71,17 +63,17 @@ $ sudo usermod -aG docker $USER
 
 #### Move your projects
 - Add your project in workspace folder `./workspace/<customer>/<projectname>` (no need to restart, this will work out of the box)
-- Open http://project.customer.dev/ in your browser (if you do not have dnsmasq, you have to add your hosts file manually)
+- Open http://project.customer.localhost/ in your browser (if you do not have dnsmasq, you have to add your hosts file manually)
 
 ## On the ship
-- mailcatcher   -> schickling/mailcatcher:latest (all outgoing mail is sent to http://mail.dev/)
+- mailcatcher   -> schickling/mailcatcher:latest (all outgoing mail is sent to http://mail.localhost/)
 - nginx         -> nginx:stable
 - mysql         -> mysql:latest  
 - php7xdebug    -> php:7.2 + xdebug
 - dnsmasq  ->  dnsmasq:latest
 - php7console   -> devpot console
 - redis         -> redis:latest
-- phpmyadmin    -> phpmyadmin:latest (http://phpmyadmin.dev)
+- phpmyadmin    -> phpmyadmin:latest (http://phpmyadmin.localhost)
 
 ## Console
 - *ZSH* + [oh-my-zsh](http://ohmyz.sh/)

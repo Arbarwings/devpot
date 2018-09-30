@@ -1,19 +1,20 @@
 server {
     listen 80;
-    server_name .dev;
+    listen [::]:80;
+    server_name .localhost;
 
     set $customer "default";
     set $project "default";
     set $store "";
 
-    include "sites-available/vhost/content7";
+    include "sites-available/vhost/default.content";
 }
 
 server {
-    listen 443;
-    server_name .dev;
+    listen 443 ssl;
+    listen [::]:443 ssl;
+    server_name .localhost;
 
-    ssl on;
     ssl_certificate certs/server.crt;
     ssl_certificate_key certs/server.key;
 
@@ -21,6 +22,6 @@ server {
     set $project "default";
     set $store "";
 
-    include "sites-available/vhost/content7";
+    include "sites-available/vhost/default.content";
 }
 

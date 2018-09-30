@@ -1,5 +1,5 @@
 
-if ( $host ~ "^([^\.]+)\.([^\.]+)\.(([^\.]+)\.)?dev$"  ) {
+if ( $host ~ "^([^\.]+)\.([^\.]+)\.(([^\.]+)\.)?localhost$"  ) {
      set $customer "$2";
      set $project "$1";
      set $store "$4";
