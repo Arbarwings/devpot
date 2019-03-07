@@ -56,7 +56,7 @@ RUN docker-php-ext-configure intl
 RUN docker-php-ext-install intl
 
 # zip
-RUN apt-get install -y zlib1g-dev \
+RUN apt-get install -y libzip-dev \
     && docker-php-ext-install zip
 
 # common

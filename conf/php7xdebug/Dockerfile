@@ -53,7 +53,7 @@ RUN apt-get install -y libicu-dev
 RUN docker-php-ext-install intl
 
 # zip
-RUN apt-get install -y zlib1g-dev \
+RUN apt-get install -y libzip-dev \
     && docker-php-ext-install zip
 
 # xdebug
