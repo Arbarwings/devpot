@@ -69,7 +69,7 @@ $ sudo usermod -aG docker $USER
 - mailcatcher   -> schickling/mailcatcher:latest (all outgoing mail is sent to http://mail.localhost/)
 - nginx         -> nginx:stable
 - mysql         -> mysql:latest  
-- php7xdebug    -> php:7.2 + xdebug
+- php7xdebug    -> php:7.3 + xdebug
 - dnsmasq  ->  dnsmasq:latest
 - php7console   -> devpot console
 - redis         -> redis:latest
