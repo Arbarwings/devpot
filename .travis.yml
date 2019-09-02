@@ -19,6 +19,7 @@ before_install:
   - cat docker-compose.yml
   - echo 'export PATH=./bin:$PATH' >> ~/.bashrc
   - source ~/.bashrc
+  - chmod +x ./bin/devpot
 
 script:
   - cp .env.dist .env
