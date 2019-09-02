@@ -1,4 +1,3 @@
-#!/bin/bash
 
 OK=false
 if [ "$1" != "-y" ]; then

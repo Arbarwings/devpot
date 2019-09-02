@@ -1,4 +1,3 @@
-#!/bin/bash
 
 # Config
 CERTS_DIR=${DEV_WORKDIR}/conf/nginx/conf/certs;

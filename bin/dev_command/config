@@ -1,4 +1,3 @@
-#!/bin/bash
 
 cd "${DEV_WORKDIR}" && docker-compose config;
 exit $?;
