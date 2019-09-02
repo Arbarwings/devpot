@@ -8,7 +8,6 @@ ENV TZ ${TZ}
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone \
     && apt-get install -f -y --reinstall locales && locale-gen en_US.UTF-8
 
-
 # INSTALL EXTENSIONS
 
 # apcu
@@ -48,13 +47,13 @@ RUN pecl install -o -f redis \
 RUN apt-get install -y libxslt-dev
 RUN docker-php-ext-install xsl
 
-# intl
-RUN apt-get install -y libicu-dev
-RUN docker-php-ext-install intl
-
 # zip
 RUN apt-get install -y libzip-dev \
     && docker-php-ext-install zip
+
+# intl
+RUN apt-get install -y libicu-dev
+RUN docker-php-ext-install intl
 
 # xdebug
 RUN pecl install xdebug \

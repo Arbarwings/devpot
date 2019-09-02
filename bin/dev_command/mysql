@@ -1,3 +1,4 @@
+#!/bin/bash
 
-cd ${DEV_WORKDIR} && docker-compose exec mysql bash -c 'mysql -uroot -p${MYSQL_ROOT_PASSWORD} ${DEV_COMMAND_OPTIONS}'
+cd "${DEV_WORKDIR}" && docker-compose exec mysql bash -c "mysql -uroot -p${MYSQL_ROOT_PASSWORD} ${DEV_COMMAND_OPTIONS}"
 exit $?;

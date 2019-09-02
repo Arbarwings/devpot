@@ -1,3 +1,4 @@
+#!/bin/bash
 
 DEV_USER=www-data;
 DEV_SERVICE=php7console;
@@ -13,4 +14,3 @@ if [ -z "${DEV_COMMAND_OPTIONS}" ]; then
 fi
 
 DEV_CMD='"${DEV_SHELL}" -c "'"${DEV_CMD} ${DEV_COMMAND_OPTIONS}"'"';
-

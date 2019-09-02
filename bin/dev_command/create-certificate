@@ -1,3 +1,4 @@
+#!/bin/bash
 
 # Config
 CERTS_DIR=${DEV_WORKDIR}/conf/nginx/conf/certs;
@@ -7,7 +8,7 @@ CERT_PROVICE="Noord-Holland";
 CERT_LOCALITY="Amsterdam";
 CERT_ORGANIZATION="DevPot";
 
-cd ${CERTS_DIR};
+cd "${CERTS_DIR}" || exit;
 echo "[req]
 default_bits       = 2048
 default_keyfile    = ${DEV_COMMAND_OPTIONS}.key
@@ -36,10 +37,10 @@ subjectAltName = @alt_names
 
 [alt_names]
 DNS.1   = *.${DEV_COMMAND_OPTIONS}.localhost
-DNS.2   = ${DEV_COMMAND_OPTIONS}.localhost" > ${DEV_COMMAND_OPTIONS}.conf
+DNS.2   = ${DEV_COMMAND_OPTIONS}.localhost" > "${DEV_COMMAND_OPTIONS}.conf"
 
-sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout ${DEV_COMMAND_OPTIONS}.key -out ${DEV_COMMAND_OPTIONS}.crt -config ${DEV_COMMAND_OPTIONS}.conf -subj "/C=${CERT_COUNTRY}/ST=${CERT_PROVICE}/L=${CERT_LOCALITY}/O=${CERT_ORGANIZATION}/CN=*.${DEV_COMMAND_OPTIONS}.localhost" -passin pass:${CERT_PASSWORD}
-sudo openssl pkcs12 -export -out ${DEV_COMMAND_OPTIONS}.pfx -inkey ${DEV_COMMAND_OPTIONS}.key -in ${DEV_COMMAND_OPTIONS}.crt -passout pass:${CERT_PASSWORD}
+sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout "${DEV_COMMAND_OPTIONS}.key" -out "${DEV_COMMAND_OPTIONS}.crt" -config "${DEV_COMMAND_OPTIONS}.conf" -subj "/C=${CERT_COUNTRY}/ST=${CERT_PROVICE}/L=${CERT_LOCALITY}/O=${CERT_ORGANIZATION}/CN=*.${DEV_COMMAND_OPTIONS}.localhost" -passin pass:${CERT_PASSWORD}
+sudo openssl pkcs12 -export -out "${DEV_COMMAND_OPTIONS}.pfx" -inkey "${DEV_COMMAND_OPTIONS}.key" -in "${DEV_COMMAND_OPTIONS}.crt" -passout pass:${CERT_PASSWORD}
 
 if sudo apt-get -qq install libnss3-tools; then
     echo "Info: Successfully installed libnss3-tools"
@@ -47,7 +48,7 @@ else
     echo "Error: Can't install libnss3-tools"
 fi
 
-certutil -d sql:$HOME/.pki/nssdb -A -t "P,," -n "${DEV_COMMAND_OPTIONS}.localhost" -i ${DEV_COMMAND_OPTIONS}.crt
+certutil -d sql:$HOME/.pki/nssdb -A -t "P,," -n "${DEV_COMMAND_OPTIONS}.localhost" -i "${DEV_COMMAND_OPTIONS}.crt"
 
 echo "Created certificate for: *.${DEV_COMMAND_OPTIONS}.localhost";
 

@@ -1,3 +1,4 @@
+#!/bin/bash
 
-cd ${DEV_WORKDIR} && docker-compose logs ${DEV_COMMAND_OPTIONS};
+cd "${DEV_WORKDIR}" && docker-compose logs ${DEV_COMMAND_OPTIONS};
 exit $?;

@@ -1,3 +1,4 @@
+#!/bin/bash
 
 DEV_USER=www-data;
 DEV_SERVICE=php7xdebug;

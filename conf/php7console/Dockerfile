@@ -1,10 +1,6 @@
 FROM php:7.3-fpm
 
-RUN apt-get update
-
-ENV COMPOSER_HOME=/home/composer/.composer
-ENV COMPOSER_ALLOW_SUPERUSER=1
-ENV ZSH=/home/.oh-my-zsh
+RUN apt-get update && apt-get install -y --no-install-recommends apt-utils
 
 # Install locale
 ARG TZ=UTC
@@ -39,7 +35,8 @@ RUN docker-php-ext-install pdo_mysql  \
     && apt-get install -y libpq-dev \
     && docker-php-ext-install pdo_pgsql \
     && apt-get install -y libsqlite3-dev \
-    && docker-php-ext-install pdo_sqlite
+    && docker-php-ext-install pdo_sqlite \
+    && docker-php-ext-install mysqli
 
 # phpredis
 RUN pecl install -o -f redis \
@@ -50,14 +47,14 @@ RUN pecl install -o -f redis \
 RUN apt-get install -y libxslt-dev
 RUN docker-php-ext-install xsl
 
+# zip
+RUN apt-get install -y libzip-dev \
+    && docker-php-ext-install zip
+
 # intl
 RUN apt-get update && apt-get install -y zlib1g-dev libicu-dev g++
 RUN docker-php-ext-configure intl
 RUN docker-php-ext-install intl
-
-# zip
-RUN apt-get install -y libzip-dev \
-    && docker-php-ext-install zip
 
 # common
 RUN docker-php-ext-install opcache calendar dba pcntl bcmath mbstring xmlrpc ftp shmop
@@ -84,6 +81,7 @@ RUN apt-get install -y \
         mc
 
 # Install OH-MY-ZSH to see pretty terminal and ditch the bash
+ENV ZSH=/home/.oh-my-zsh
 RUN apt-get install -y zsh
 RUN curl -L https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh | bash
 
@@ -91,6 +89,8 @@ RUN curl -L https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.s
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 #COMPOSER
+ENV COMPOSER_HOME=/home/composer/.composer
+ENV COMPOSER_ALLOW_SUPERUSER=1
 RUN curl https://getcomposer.org/installer | php -- && mv composer.phar /usr/local/bin/composer && chmod +x /usr/local/bin/composer
 ENV PATH /home/composer/.composer/vendor/bin:$PATH
 
