@@ -1,0 +1,27 @@
+name: Docker Image CI
+
+on: [push]
+
+jobs:
+
+  build:
+ 
+    runs-on: ubuntu-latest
+ 
+    steps:
+    - uses: actions/checkout@master
+    - name: Prepair install
+      run: |
+          echo 'export PATH=./bin:$PATH' >> ~/.bashrc
+          source ~/.bashrc
+          chmod +x ./bin/devpot
+    - name: Create env file
+      run: cp .env.dist .env
+    - name: Build the images
+      run: devpot build
+    - name: Start the containers
+      run: devpot up
+    - name: Show the status
+      run: devpot ps
+    - name: Display PHP version
+      run: devpot php -v
