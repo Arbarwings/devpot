@@ -18,10 +18,10 @@ jobs:
     - name: Create env file
       run: cp .env.dist .env
     - name: Build the images
-      run: devpot build
+      run: ./bin/devpot build
     - name: Start the containers
-      run: devpot up
+      run: ./bin/devpot up
     - name: Show the status
-      run: devpot ps
+      run: ./bin/devpot ps
     - name: Display PHP version
-      run: devpot php -v
+      run: ./bin/devpot php -v
