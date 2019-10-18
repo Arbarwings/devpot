@@ -23,7 +23,7 @@ DevPot is a new version of [Maxlab Stacker](https://github.com/Maxlab/stacker).
 
 ## Requirements
 - Install [Docker](https://docs.docker.com/)
-- Install [Docker Compose](https://docs.docker.com/compose/install/) > 1.8.0
+- Install [Docker Compose](https://docs.docker.com/compose/install/) > 1.20.0
 
 ## Installation
 
